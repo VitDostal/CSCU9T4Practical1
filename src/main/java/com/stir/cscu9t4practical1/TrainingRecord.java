@@ -1,9 +1,6 @@
 // An implementation of a Training Record as an ArrayList
 package com.stir.cscu9t4practical1;
 
-
-
-
 import java.util.*;
 
 
@@ -38,6 +35,24 @@ public class TrainingRecord {
    // Clear all entries
    public void clearAllEntries(){
        tr.clear();
+   }
+   
+   public String findAllEntrys(int d, int m, int y){ // TESTSTSTSTSTSTS
+       ListIterator<Entry> iter = tr.listIterator();
+       ArrayList<String> results = new ArrayList<String>(); 
+       String result = "";
+       while (iter.hasNext()) {
+          Entry current = iter.next();
+          if (current.getDay()==d && current.getMonth()==m && current.getYear()==y) 
+             results.add(current.getEntry());
+            }
+       for (var i : results) {
+      result += i;
+    }
+       if(results.isEmpty()){
+           result = "No entries found";
+       }
+       return result;
    }
    
 } // TrainingRecord
