@@ -7,6 +7,10 @@ public class Entry {
   private Calendar dateAndTime;
   private float distance;
   
+  public Entry(){
+      name = "?";
+  }
+  
   public Entry (String n, int d, int m, int y, int h, int min, int s, float dist) {
     name = n;
     Calendar inst = Calendar.getInstance();

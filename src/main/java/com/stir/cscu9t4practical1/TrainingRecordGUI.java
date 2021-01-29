@@ -27,6 +27,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JLabel labdist = new JLabel(" Distance (km):");
     private JButton addR = new JButton("Add");
     private JButton lookUpByDate = new JButton("Look Up");
+    private JButton findAllByDate = new JButton ("Find All By Date");
 
     private TrainingRecord myAthletes = new TrainingRecord();
 
@@ -68,6 +69,8 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         addR.addActionListener(this);
         add(lookUpByDate);
         lookUpByDate.addActionListener(this);
+        add(findAllByDate);
+        findAllByDate.addActionListener(this);
         add(outputArea);
         outputArea.setEditable(false);
         setSize(720, 200);
@@ -88,6 +91,9 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         if (event.getSource() == lookUpByDate) {
             message = lookupEntry();
         }
+        if (event.getSource() == findAllByDate){
+            message = findAllByDate();
+        }
         outputArea.setText(message);
         blankDisplay();
     } // actionPerformed
@@ -95,13 +101,34 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     public String addEntry(String what) {
         String message = "Record added\n";
         System.out.println("Adding "+what+" entry to the records");
+        if(name.getText().trim().equals("")){
+            return "Please add name.";
+        }
         String n = name.getText();
+        if (!isInteger(month.getText())){
+        return "Please use only integeres to enter month.";
+    }        
         int m = Integer.parseInt(month.getText());
+        if (!isInteger(day.getText())){
+        return "Please use only integeres to enter day.";
+    } 
         int d = Integer.parseInt(day.getText());
+        if (!isInteger(year.getText())){
+        return "Please use only integeres to enter year.";
+    } 
         int y = Integer.parseInt(year.getText());
         float km = java.lang.Float.parseFloat(dist.getText());
+        if (!isInteger(hours.getText())){
+        return "Please use only integeres to enter hours.";
+    } 
         int h = Integer.parseInt(hours.getText());
+        if (!isInteger(mins.getText())){
+        return "Please use only integeres to enter mins.";
+    } 
         int mm = Integer.parseInt(mins.getText());
+        if (!isInteger(secs.getText())){
+        return "Please use only integeres to enter secs.";
+    } 
         int s = Integer.parseInt(secs.getText());
         Entry e = new Entry(n, d, m, y, h, mm, s, km);
         myAthletes.addEntry(e);
@@ -139,6 +166,39 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         secs.setText(String.valueOf(ent.getSec()));
         dist.setText(String.valueOf(ent.getDistance()));
     }
+    
+    public String findAllByDate(){
+    int m = Integer.parseInt(month.getText());
+        int d = Integer.parseInt(day.getText());
+        int y = Integer.parseInt(year.getText());
+        outputArea.setText("looking up record ...");
+        String message = myAthletes.findAllEntrys(d, m, y);
+        return message;        
+    }
+    
+    public static boolean isInteger(String str) {
+    if (str == null) {
+        return false;
+    }
+    int length = str.length();
+    if (length == 0) {
+        return false;
+    }
+    int i = 0;
+    if (str.charAt(0) == '-') {
+        if (length == 1) {
+            return false;
+        }
+        i = 1;
+    }
+    for (; i < length; i++) {
+        char c = str.charAt(i);
+        if (c < '0' || c > '9') {
+            return false;
+        }
+    }
+    return true;
+}
 
 } // TrainingRecordGUI
 
