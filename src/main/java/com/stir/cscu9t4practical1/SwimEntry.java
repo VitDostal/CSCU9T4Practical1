@@ -6,7 +6,7 @@
 package com.stir.cscu9t4practical1;
 
 /**
- *
+ *"Alice swam 3.0 km outdoors in 0:16:7 on 1/2/2003\n";
  * @author games
  */
 public class SwimEntry extends Entry{
@@ -18,7 +18,19 @@ public class SwimEntry extends Entry{
     }
     
     public String getWhere(){
-        return location;
+        if (location.equals("outdoors")){
+            return "outdoors";
+        }else{
+            return "in a pool";
+        }
+        
     }
     
+    @Override
+   public String getEntry () {
+   String result = getName()+" swam "+ getDistance() + " km "+getWhere()+ " in "
+             +getHour()+":"+getMin()+":"+ getSec()+ " on "
+             +getDay()+"/"+getMonth()+"/"+getYear()+ "\n";
+   return result;
+  } //getEntry
 }

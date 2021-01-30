@@ -5,11 +5,8 @@ import java.util.Calendar;
 public class Entry {
   private String name;
   private Calendar dateAndTime;
-  private float distance;
+  private float distance;  
   
-  public Entry(){
-      name = "?";
-  }
   
   public Entry (String n, int d, int m, int y, int h, int min, int s, float dist) {
     name = n;

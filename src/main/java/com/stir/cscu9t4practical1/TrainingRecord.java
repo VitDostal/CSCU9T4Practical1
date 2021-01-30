@@ -50,7 +50,7 @@ public class TrainingRecord {
       result += i;
     }
        if(results.isEmpty()){
-           result = "No entries found";
+           result = "Sorry couldn't find anything for this date";
        }
        return result;
    }
