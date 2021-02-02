@@ -29,6 +29,11 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JButton lookUpByDate = new JButton("Look Up");
     private JButton findAllByDate = new JButton ("Find All By Date");
 
+    private String entrys[] = {"Cycle", "Sprint", "Swim"}; 
+    private JComboBox entryBox = new JComboBox(entrys);
+    private JTextField addInfo1 = new JTextField(15);
+    private JTextField addInfo2 = new JTextField(15);
+    private JLabel labAddInfo1 = new JLabel(" Additional information:");    
     private TrainingRecord myAthletes = new TrainingRecord();
 
     private JTextArea outputArea = new JTextArea(5, 50);
@@ -71,6 +76,13 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         lookUpByDate.addActionListener(this);
         add(findAllByDate);
         findAllByDate.addActionListener(this);
+        add(entryBox);
+        entryBox.addActionListener(this);
+        add(labAddInfo1);
+        add(addInfo1);
+        addInfo1.setEditable(true);
+        add(addInfo2);
+        addInfo2.setEditable(true);
         add(outputArea);
         outputArea.setEditable(false);
         setSize(720, 200);
@@ -94,11 +106,27 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         if (event.getSource() == findAllByDate){
             message = findAllByDate();
         }
+        if (event.getSource() == entryBox){
+            String selected = (String)entryBox.getSelectedItem();
+            if(selected.equals("Cycle")){
+                addInfo1.setText("Enter terrain here");
+                addInfo2.setText("Enter tempo here");
+            }
+            else if(selected.equals("Sprint")){
+                addInfo1.setText("Enter repetition here");
+                addInfo2.setText("Enter recovery here");
+            }
+            else{
+                addInfo1.setText("Enter location here");
+                addInfo2.setText("Enter nothing here");
+            }
+        }
         outputArea.setText(message);
         blankDisplay();
     } // actionPerformed
 
     public String addEntry(String what) {
+        String selected = (String)entryBox.getSelectedItem();
         String message = "Record added\n";
         System.out.println("Adding "+what+" entry to the records");
         if(name.getText().trim().equals("")){
@@ -130,8 +158,25 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         return "Please use only integeres to enter secs.";
     } 
         int s = Integer.parseInt(secs.getText());
-        Entry e = new Entry(n, d, m, y, h, mm, s, km);
-        myAthletes.addEntry(e);
+        
+        if(selected.equals("Cycle")){
+            String t = addInfo1.getText();
+            String te = addInfo2.getText();   
+            CycleEntry e = new CycleEntry(n, d, m, y, h, mm, s, km, t, te);
+            myAthletes.addEntry(e);
+            }
+            else if(selected.equals("Sprint")){
+            int r = Integer.parseInt(addInfo1.getText());
+            int re = Integer.parseInt(addInfo2.getText());  
+            SprintEntry e = new SprintEntry(n, d, m, y, h, mm, s, km, r, re);
+            myAthletes.addEntry(e);
+            }
+            else{
+            String l = addInfo1.getText();                
+            SwimEntry e = new SwimEntry(n, d, m, y, h, mm, s, km, l);
+            myAthletes.addEntry(e);
+            }        
+        
         return message;
     }
     
@@ -200,5 +245,6 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     return true;
 }
 
+    
 } // TrainingRecordGUI
 
