@@ -26,6 +26,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JLabel labs = new JLabel(" Secs:");
     private JLabel labdist = new JLabel(" Distance (km):");
     private JButton addR = new JButton("Add");
+    private JButton removeR = new JButton("Remove");
     private JButton lookUpByDate = new JButton("Look Up");
     private JButton findAllByDate = new JButton ("Find All By Date");
 
@@ -72,6 +73,8 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         dist.setEditable(true);
         add(addR);
         addR.addActionListener(this);
+        add(removeR);
+        removeR.addActionListener(this);
         add(lookUpByDate);
         lookUpByDate.addActionListener(this);
         add(findAllByDate);
@@ -121,6 +124,9 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
                 addInfo2.setText("Enter nothing here");
             }
         }
+        if(event.getSource() == removeR){
+            message = removeEntry();
+        }
         outputArea.setText(message);
         blankDisplay();
     } // actionPerformed
@@ -135,7 +141,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         String n = name.getText();
         if (!isInteger(month.getText())){
         return "Please use only integeres to enter month.";
-    }        
+    }       
         int m = Integer.parseInt(month.getText());
         if (!isInteger(day.getText())){
         return "Please use only integeres to enter day.";
@@ -158,22 +164,33 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         return "Please use only integeres to enter secs.";
     } 
         int s = Integer.parseInt(secs.getText());
+        // String sameCheck = lookUpEntry(d,m,y);
+        
         
         if(selected.equals("Cycle")){
             String t = addInfo1.getText();
             String te = addInfo2.getText();   
             CycleEntry e = new CycleEntry(n, d, m, y, h, mm, s, km, t, te);
+            String sameCheck = myAthletes.checkupEntry(n, d, m, y);
+            if(sameCheck.equals("Same entry found"))
+                return "Entry already exists";
             myAthletes.addEntry(e);
             }
             else if(selected.equals("Sprint")){
             int r = Integer.parseInt(addInfo1.getText());
             int re = Integer.parseInt(addInfo2.getText());  
             SprintEntry e = new SprintEntry(n, d, m, y, h, mm, s, km, r, re);
+            String sameCheck = myAthletes.checkupEntry(n, d, m, y);
+            if((sameCheck.equals("Same entry found")))
+                return "Entry already exists";
             myAthletes.addEntry(e);
             }
             else{
             String l = addInfo1.getText();                
             SwimEntry e = new SwimEntry(n, d, m, y, h, mm, s, km, l);
+            String sameCheck = myAthletes.checkupEntry(n, d, m, y);
+            if(sameCheck.equals("Same entry found"))
+                return "Entry already exists";
             myAthletes.addEntry(e);
             }        
         
@@ -213,7 +230,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     }
     
     public String findAllByDate(){
-    int m = Integer.parseInt(month.getText());
+        int m = Integer.parseInt(month.getText());
         int d = Integer.parseInt(day.getText());
         int y = Integer.parseInt(year.getText());
         outputArea.setText("looking up record ...");
@@ -244,6 +261,14 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     }
     return true;
 }
+    public String removeEntry(){        
+        String n = name.getText();
+        int m = Integer.parseInt(month.getText());
+        int d = Integer.parseInt(day.getText());
+        int y = Integer.parseInt(year.getText());               
+        String message = myAthletes.removeEntry(n, d, m, y);
+        return message;
+    }
 
     
 } // TrainingRecordGUI

@@ -143,4 +143,42 @@ public class TrainingRecordTest {
         assertEquals(expectResults,resultSuccess);
     }
     
+    /**
+     * Test of checkupEntry method, of class TrainingRecord.
+     */
+    @Test
+    public void testCheckupEntry() {
+        System.out.println("checkupEntry");
+        TrainingRecord instance = new TrainingRecord();        
+        Entry a = new Entry("Alice", 1, 2, 2003, 0, 16, 7, 3);
+        Entry b = new Entry("Bob", 1, 2, 2003, 0, 14, 15, 3);
+        Entry c1 = new Entry("Claire", 7, 3, 2010, 0, 26, 20, 7);        
+        instance.addEntry(a);
+        instance.addEntry(b);
+        instance.addEntry(c1);
+        instance.checkupEntry("Claire", 7, 3, 2010);       
+        int expResult = 3;        
+        assertEquals(expResult, instance.getNumberOfEntries(), "expecting to not find the entry");
+    }
+    
+    /**
+     * Test of removeEntry method, of class TrainingRecord.
+     */
+    @Test
+    public void removeEntry() {
+        System.out.println("removeEntry");
+        TrainingRecord instance = new TrainingRecord();        
+        Entry a = new Entry("Alice", 1, 2, 2003, 0, 16, 7, 3);
+        Entry b = new Entry("Bob", 1, 2, 2003, 0, 14, 15, 3);
+        Entry c1 = new Entry("Claire", 7, 3, 2010, 0, 26, 20, 7);        
+        instance.addEntry(a);
+        instance.addEntry(b);
+        instance.addEntry(c1);
+        instance.removeEntry("Claire", 7, 3, 2010);       
+        int expResult = 2;        
+        assertEquals(expResult, instance.getNumberOfEntries(), "expecting to not find the entry");
+    }
+    
+    
+    
 }

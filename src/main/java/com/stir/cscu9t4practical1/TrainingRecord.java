@@ -16,6 +16,10 @@ public class TrainingRecord {
        tr.add(e);    
    } // addClass
    
+   public void removeEntryIndex(int index){
+       tr.remove(index);
+   }
+   
    // look up the entry of a given day and month
    public String lookupEntry (int d, int m, int y) {
        ListIterator<Entry> iter = tr.listIterator();
@@ -53,6 +57,35 @@ public class TrainingRecord {
            result = "Sorry couldn't find anything for this date";
        }
        return result;
-   }
+   }   
+   
+   public String checkupEntry (String name,int d, int m, int y) {
+       ListIterator<Entry> iter = tr.listIterator();
+       String result = "Same entry not found";
+       while (iter.hasNext()) {
+          Entry current = iter.next();
+          if (current.getDay()==d && current.getMonth()==m && current.getYear()==y && current.getName().equals(name)) 
+             result = "Same entry found";
+            }
+       return result;
+   } 
+   public String removeEntry (String name,int d, int m, int y) {
+       ListIterator<Entry> iter = tr.listIterator();
+       int index = -1;
+       String result = "Entry not found";
+       while (iter.hasNext()) {
+          index ++;
+          Entry current = iter.next();
+          if (current.getDay()==d && current.getMonth()==m && current.getYear()==y && current.getName().equals(name)){
+             removeEntryIndex(index);
+             System.out.println("Entry removed");
+             result = "Entry removed";
+          }             
+             
+            }
+       return result;
+   } 
+   
+   
    
 } // TrainingRecord
