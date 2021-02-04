@@ -47,6 +47,8 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     public TrainingRecordGUI() {
         super("Training Record");
         setLayout(new FlowLayout());
+        add(entryBox);        
+        entryBox.addActionListener(this);
         add(labn);
         add(name);
         name.setEditable(true);
@@ -74,13 +76,14 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         add(addR);
         addR.addActionListener(this);
         add(removeR);
-        removeR.addActionListener(this);
+        removeR.setEnabled(false);
+        removeR.addActionListener(this);        
         add(lookUpByDate);
+        lookUpByDate.setEnabled(false);
         lookUpByDate.addActionListener(this);
         add(findAllByDate);
-        findAllByDate.addActionListener(this);
-        add(entryBox);
-        entryBox.addActionListener(this);
+        findAllByDate.setEnabled(false);
+        findAllByDate.addActionListener(this);        
         add(labAddInfo1);
         add(addInfo1);
         addInfo1.setEditable(true);
@@ -102,6 +105,9 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         String message = "";
         if (event.getSource() == addR) {
             message = addEntry("generic");
+            findAllByDate.setEnabled(true);
+            lookUpByDate.setEnabled(true);
+            removeR.setEnabled(true);
         }
         if (event.getSource() == lookUpByDate) {
             message = lookupEntry();
